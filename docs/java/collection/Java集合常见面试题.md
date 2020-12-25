@@ -71,11 +71,7 @@ Set注重独一无二的性质，该体系集合用于存储无序（存入和�
 1. 是否线程安全：都是不同步的，也就是不保证线程安全；
 
 2. 底层数据结构：`ArrayList` 底层使用**object类型的数组**；`LikedList`底层使用的是**双向链表**数据结构（jdk1.6之前为循环链表）
-<<<<<<< HEAD
-=======
 3. 插入和删除是否受元素位置的影响：①  `ArrayList`采用数组存储，所以插入和删除元素的时间复杂度受元素的位置的影响。
->>>>>>> 48604c01ee9b3d7a658d9520ab990397ab9f43b5
-
 3. 插入和删除是否受元素位置的影响：①  `ArrayList`采用数组存储，所以插入和删除元素的时间复杂度受元素的位置的影响。比如：执行add(E e)方法的时候，`ArrayList` 会默认在将指定的元素追加到此列表的末尾，这种情况的话(add(int index, E element) )时间复杂度就为O(n-i)。因此在进行上述操作的时候，`ArrayList` 会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是o(1)。但是如果要在指定位置i插入和删除元素的话（add(int index,E element)）时间复杂度就为O(n-i)。因为在进行上述操作的时候集合中第i和第i个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。② **`LinkedList` 采用链表存储，所以对于add(E e)方法插入，删除元素的时间复杂度不受元素位置的影响，近似O(1),如果是要在指定位置i插入和删除元素的话((add(int index,E element)))时间复杂度近似为o(n)因为需要先移动到指定位置再插入**。
 
 4. 是否支持快速随机访问：`LinkedList` 不支持高效的随机元素访问，而`Arraylist`支持，快速随机访问就是通过元素的序号快速获取元素对象（对应get(int index)方法）。
@@ -129,7 +125,7 @@ TreeSet 底层使用红黑树，能够按照添加元素的顺序进行遍历，
 4. 综上，equals 方法被覆盖过，则 hashCode 方法也必须被覆盖
 5. hashCode()的默认行为是对堆上的对象产生独特值。如果没有重写 hashCode()，则该 class 的两个对象无论如何都不会相等（即使这两个对象指向相同的数据）。
 
-**==与 equals 的区别**
+**== 与 equals 的区别**
 
 对于基本类型来说，== 比较的是值是否相等；
 
@@ -269,45 +265,45 @@ public class ArrayList<E> extends AbstractList<E>  implements List<E>, RandomAcc
        }
    ```
 
-   2. `grow` 方法
+   2 `grow` 方法
 
-      ```java
-      
-          /**
-           * 要分配的最大数组大小
-           */
-      
-          private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
-      
-      
-           /**
-             * ArrAyList扩容的核心方法
-             * 
-             */
-      
-          private void grow(int minCapacity) {
-                  // oldCapacity  旧容量
-                  int oldCapacity = elementData.length;
-                  // newCapacity  新容量
-                  //oldCapacity 右移一位，位运算的速度远远快于整除运算，整句运算式的
-                  // 结果就是将新容量更新为旧容量的1.5倍，oldCapacity/2对等oldCapacity >> 1
-                  int newCapacity = oldCapacity + (oldCapacity >> 1);
-                  //检查新容量是否大于最小需要容量，若还是小于最小需要容量，
-                  //那么就把最小需要容量当作数组的新容量，
-                  if (newCapacity - minCapacity < 0)
-                      newCapacity = minCapacity;
-                  // 如果新容量大于 MAX_ARRAY_SIZE,进入(执行) `hugeCapacity()` 方法来比较     			// minCapacity 和 MAX_ARRAY_SIZE，
-                  //如果minCapacity大于最大容量，则新容量则为`Integer.MAX_VALUE`，否则，新容量大小             //则为 MAX_ARRAY_SIZE 即为 `Integer.MAX_VALUE - 8`。
-                  if (newCapacity - MAX_ARRAY_SIZE > 0)
-                      newCapacity = hugeCapacity(minCapacity);
-                  // minCapacity is usually close to size, so this is a win:
-                  elementData = Arrays.copyOf(elementData, newCapacity);
-              }
-      ```
+   ```java
+   
+       /**
+        * 要分配的最大数组大小
+        */
+   
+       private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+   
+   
+        /**
+          * ArrAyList扩容的核心方法
+          * 
+          */
+   
+       private void grow(int minCapacity) {
+               // oldCapacity  旧容量
+               int oldCapacity = elementData.length;
+               // newCapacity  新容量
+               //oldCapacity 右移一位，位运算的速度远远快于整除运算，整句运算式的
+               // 结果就是将新容量更新为旧容量的1.5倍，oldCapacity/2对等oldCapacity >> 1
+               int newCapacity = oldCapacity + (oldCapacity >> 1);
+               //检查新容量是否大于最小需要容量，若还是小于最小需要容量，
+               //那么就把最小需要容量当作数组的新容量，
+               if (newCapacity - minCapacity < 0)
+                   newCapacity = minCapacity;
+               // 如果新容量大于 MAX_ARRAY_SIZE,进入(执行) `hugeCapacity()` 方法来比较     			// minCapacity 和 MAX_ARRAY_SIZE，
+               //如果minCapacity大于最大容量，则新容量则为`Integer.MAX_VALUE`，否则，新容量大小             //则为 MAX_ARRAY_SIZE 即为 `Integer.MAX_VALUE - 8`。
+               if (newCapacity - MAX_ARRAY_SIZE > 0)
+                   newCapacity = hugeCapacity(minCapacity);
+               // minCapacity is usually close to size, so this is a win:
+               elementData = Arrays.copyOf(elementData, newCapacity);
+           }
+   ```
 
-       oldCapacity + (oldCapacity >> 1)  ，`ArrayList`每次扩容为它原有的1.5倍，奇数会去掉小数位
+    oldCapacity + (oldCapacity >> 1)  ，`ArrayList`每次扩容为它原有的1.5倍，奇数会去掉小数位
 
-      > ">>"（移位运算符）：>>1 右移一位相当于除2，右移n位相当于除以 2 的 n 次方。这里 oldCapacity 明显右移了1位所以相当于oldCapacity /2。对于大数据的2进制运算,位移运算符比那些普通运算符的运算要快很多,因为程序仅仅移动一下而已,不去计算,这样提高了效率,节省了资源 
+   > ">>"（移位运算符）：>>1 右移一位相当于除2，右移n位相当于除以 2 的 n 次方。这里 oldCapacity 明显右移了1位所以相当于oldCapacity /2。对于大数据的2进制运算,位移运算符比那些普通运算符的运算要快很多,因为程序仅仅移动一下而已,不去计算,这样提高了效率,节省了资源 
 
    
 
@@ -382,7 +378,7 @@ Node<K,V> next：next就是用于链表的指向。
 
 所谓**扰动函数**指的就是 HashMap 的 hash 方法。使用 hash 方法也就是扰动函数是为了防止一些实现比较差的 hashCode() 方法 换句话说使用扰动函数之后可以减少碰撞。 
 
-![](C:\Users\Administrator\Desktop\面试\JasonHu\docs\java\collection\images\Node数组结构.png)
+![](./images/Node数组结构.png)
 
 ### 1.5.2 put()源码分析  （map.put("a","b")整个流程）
 
@@ -490,7 +486,7 @@ Node<K,V> next：next就是用于链表的指向。
 6. 判断是否需要扩容，如果需要就扩容。
 ```
 
-![](C:\Users\Administrator\Desktop\面试\JasonHu\docs\java\collection\images\hashMap之put.png)
+![](./images/hashMap之put.png)
 
 ### 1.5.3 扩容（resize方法）
 
@@ -585,7 +581,7 @@ final Node<K,V>[] resize() {
 }
 ```
 
-![](C:\Users\Administrator\Desktop\面试\JasonHu\docs\java\collection\images\resize.png)
+![](./images/resize.png)
 
 ## ConcurrentHashMap
 
@@ -593,7 +589,7 @@ final Node<K,V>[] resize() {
 
 ### 1. 存储结构
 
-![Java8 ConcurrentHashMap 存储结构（图片来自 javadoop）](C:\Users\Administrator\Desktop\面试\JasonHu\docs\java\collection\images/java8_concurrenthashmap.png)
+![Java8 ConcurrentHashMap 存储结构（图片来自 javadoop）](./images/java8_concurrenthashmap.png)
 
 可以发现 Java8 的 ConcurrentHashMap  相对于 Java7 来说变化比较大，不再是之前的 **Segment 数组 + HashEntry 数组 + 链表**，而是 **Node 数组 + 链表 / 红黑树**。当冲突链表达到一定长度时，链表会转换成红黑树。
 
