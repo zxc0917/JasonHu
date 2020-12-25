@@ -6,7 +6,7 @@
 
 Java除了以`Map` 结尾的类之外，其他类都实现自`Collection`接口，并且以`Map`结尾的类都实现了`Map`接口（`SetFromMap` 是`Collection的内部类`）
 
-![](C:\Users\Administrator\Desktop\面试\JasonHu\docs\java\collection\images\Java-Collections.jpeg)
+![](./images/Java-Collections.jpeg)
 
 ### 1.1.2 List ,Set,Map 三者的区别？
 
@@ -71,6 +71,10 @@ Set注重独一无二的性质，该体系集合用于存储无序（存入和�
 1. 是否线程安全：都是不同步的，也就是不保证线程安全；
 
 2. 底层数据结构：`ArrayList` 底层使用**object类型的数组**；`LikedList`底层使用的是**双向链表**数据结构（jdk1.6之前为循环链表）
+<<<<<<< HEAD
+=======
+3. 插入和删除是否受元素位置的影响：①  `ArrayList`采用数组存储，所以插入和删除元素的时间复杂度受元素的位置的影响。
+>>>>>>> 48604c01ee9b3d7a658d9520ab990397ab9f43b5
 
 3. 插入和删除是否受元素位置的影响：①  `ArrayList`采用数组存储，所以插入和删除元素的时间复杂度受元素的位置的影响。比如：执行add(E e)方法的时候，`ArrayList` 会默认在将指定的元素追加到此列表的末尾，这种情况的话(add(int index, E element) )时间复杂度就为O(n-i)。因此在进行上述操作的时候，`ArrayList` 会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是o(1)。但是如果要在指定位置i插入和删除元素的话（add(int index,E element)）时间复杂度就为O(n-i)。因为在进行上述操作的时候集合中第i和第i个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。② **`LinkedList` 采用链表存储，所以对于add(E e)方法插入，删除元素的时间复杂度不受元素位置的影响，近似O(1),如果是要在指定位置i插入和删除元素的话((add(int index,E element)))时间复杂度近似为o(n)因为需要先移动到指定位置再插入**。
 
